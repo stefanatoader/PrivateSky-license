@@ -1,0 +1,141 @@
+<div ng-controller="answersManagementController">
+
+    <!--Page titlte-->
+    <div class="bg-light lter b-b wrapper-md ng-scope pageTitle">
+        <h1 class="m-n font-thin h3">Answers Management</h1>
+    </div>
+
+    <div class="container-fluid">
+        <div class="panel panel-default" style="margin-top: 15px;" ng-show="fetching">
+            <div class="panel-heading font-bold">Retrieve form's answers for an user</div>
+            <div class="panel-body">
+                <form class="form-inline" role="search">
+                    <div class="row">
+                        <div class="col-xs-10 col-md-10 col-sm-10 col-lg-10" style="text-align: center">
+                            <div class="form-group" style="width: 100%">
+                                <input type="email" class="form-control" style="width:100%" id="userEmail" ng-model="userEmail" placeholder="Enter user's email">
+                            </div>
+                        </div>
+                        <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2" style="text-align: center">
+                            <button type="button" ng-click="retrieveAnswers()" class="btn btn-default" style="width: 100%">Search</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid">
+        <div class="panel panel-default" style="margin-top: 15px;" ng-show="fetching">
+            <div class="panel-heading font-bold">Retrieve answers for a given form</div>
+            <div class="panel-body">
+                <form class="form-inline" role="search">
+                    <div class="row">
+                        <div class="col-xs-10 col-md-10 col-sm-10 col-lg-10" style="text-align: center">
+                            <div class="form-group" style="width: 100%">
+                                <autocomplete ng-model="formTitle" data="autocomplete" attr-placeholder="Enter form's title" attr-input-class="form-control fullWidth" on-type="retrieveForms"></autocomplete>
+                            </div>
+                        </div>
+                        <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2" style="text-align: center">
+                            <button type="button" ng-click="retrieveAnswers()" class="btn btn-default" style="width: 100%">Search</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+
+    <div class="wrapper-md ng-scope" ng-hide="fetching">
+        <!--A small title for forms section-->
+        <div class="panel panel-default" ng-hide="displayAnswers">
+            <div class="alert alert-info noFormsAlert" style="margin: 15px; font-weight: 500; text-align: center" ng-show="forms.length==0">There are no forms available yet.</div>
+
+            <div ng-show="forms.length>0">
+                <table class="table footable m-b-none default table-striped" data-filter="#filter" data-filtering="true" data-paging="true" data-sorting="true" data-page-size="5" data-limit-navigation="3" id="formsTable">
+
+                    <thead>
+                    <tr>
+                        <th>Title</th>
+                        <th data-hide="phone,tablet" data-sort-ignore="true">Description</th>
+                        <th data-hide="phone,tablet">Date</th>
+                        <th>Editable</th>
+                        <th data-sort-ignore="true">Actions</th>
+                    </tr>
+                    </thead>
+
+                    <tbody>
+                    <tr ng-repeat="form in forms track by $index" class="footable-even" style="display: table-row;" redraw-table>
+                        <td>{{form.title}}</td>
+                        <td>{{form.description}}</td>
+                        <td>{{humanReadableDate(form)}}</td>
+                        <td ng-switch="form.modified">
+                            <span class="label label-success" ng-switch-when="true">TRUE</span>
+                            <span class="label label-default" ng-switch-when="false">FALSE</span>
+                        </td>
+                        <td>
+                            <input type="button" class="btn btn-info btn-xs" ng-click="modalForm(form)" value="Review">
+                        </td>
+                    </tr>
+                    </tbody>
+
+                    <tfoot>
+                    <tr class="footable-row-detail">
+                        <td colspan="5">
+                            <div class="text-center hide-if-no-paging">
+                                <ul class="pagination"></ul>
+                            </div>
+                        </td>
+                    </tr>
+                    </tfoot>
+
+                </table>
+            </div>
+        </div>
+
+
+
+        <!--A small title for answers section-->
+        <div class="panel panel-default" ng-show="displayAnswers">
+            <div class="alert alert-info noFormsAlert" style="margin: 15px; font-weight: 500; text-align: center" ng-show="answers.length==0">There are no answers available yet.</div>
+
+                <div ng-show="answers.length>0">
+                    {{answers}}
+                    <table class="table footable m-b-none default table-striped" data-filter="#filter" data-filtering="true" data-paging="true" data-sorting="true" data-page-size="5" data-limit-navigation="3" id="answersTable">
+
+                        <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th data-hide="phone,tablet" data-sort-ignore="true">Email</th>
+                            <th data-hide="phone,tablet">Zone</th>
+                            <th data-sort-ignore="true">Actions</th>
+                        </tr>
+                        </thead>
+
+                        <tbody>
+                        <tr ng-repeat="answer in answers track by $index" class="footable-even" style="display: table-row;" redraw-table>
+                            <td>{{answer.firstName}} {{answer.lastName}}</td>
+                            <td>{{answer.email}}</td>
+                            <td>{{answer.zoneName | userMappingZones}}</td>
+                            <td>
+                                <input type="button" class="btn btn-info btn-xs" ng-click="modalForm(answer)" value="Review">
+                            </td>
+                        </tr>
+                        </tbody>
+
+                        <tfoot>
+                        <tr class="footable-row-detail">
+                            <td colspan="5">
+                                <div class="text-center hide-if-no-paging">
+                                    <ul class="pagination"></ul>
+                                </div>
+                            </td>
+                        </tr>
+                        </tfoot>
+
+                    </table>
+                </div>
+        </div>
+    </div>
+</div>

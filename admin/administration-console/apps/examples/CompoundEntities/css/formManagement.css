@@ -1,0 +1,289 @@
+/*Title & Description input*/
+.formTitle::-webkit-input-placeholder{
+    color: #404b4f;
+    font-size:30px;
+}
+.formDescription::-webkit-input-placeholder{
+    font-size:15px;
+}
+.formTitle{
+    padding-bottom: 0;
+    color: #404b4f;
+    font-size:30px;
+}
+
+.noFormsAlert{
+    margin: 15px ;
+    text-align: center;
+    font-weight: 500;
+}
+/**************************************************/
+
+/*Body modifications*/
+.mainFieldsForms{
+    border-left:3px solid #0C99E4;
+    padding-left: 6px;
+}
+.modal-body{
+    padding-left: 0;
+    padding-right: 0;
+    padding-top: 0;
+}
+.panel-default{
+    border:0;
+}
+
+@media (max-width: 767px){
+    .collapse {
+        position: inherit;
+    }
+
+    .marginFix{
+        margin-left: 10px;
+    }
+
+}
+
+@media (min-width: 767px){
+    .marginFix{
+        margin-left: 10px;
+        margin-right: 10px;
+    }
+}
+
+.form-group{
+    margin-bottom: 5px;
+}
+
+
+
+accordion > div > .panel-default .panel-heading{
+    background: none;
+    height: 0;
+    padding: 0;
+}
+.panel-title{
+    height: 0;
+}
+#loader{
+    text-align: center;
+}
+
+/*Container-ul mare*/
+.fg-edit[ng-form="$fg"] {
+    display: -webkit-box;
+    display: -moz-box;
+    display: box;
+    -webkit-box-orient: vertical;
+    -moz-box-orient: vertical;
+    box-orient: vertical;
+    /*display: none;*/
+}
+
+/*Container elemente formular*/
+div[ng-form="$palette"] {
+    float: left;
+    width: 100%;
+    -webkit-box-ordinal-group: 2;
+    -moz-box-ordinal-group: 3;
+    box-ordinal-group: 3;
+    /*border-left:3px solid #0C99E4;*/
+    /*margin-left: 4px;*/
+    margin-right:20px;
+}
+
+div[nf-form="$fg"]{
+    padding-bottom: 0;
+}
+
+.panel-body{
+    padding-right: 0;
+}
+
+
+div[ng-form="$fg"] > .col-sm-8 {
+    padding-right: 8px;
+}
+
+/*Container-ul cu zona de editat*/
+.fg-edit .col-sm-8 {
+    /*background-color: green;*/
+    float: right;
+    width: 100%;
+    -webkit-box-ordinal-group: 3;
+    -moz-box-ordinal-group: 2;
+    box-ordinal-group: 2;
+    /*border-left:3px solid #0C99E4;*/
+    padding: 0;
+    margin-left:4px;
+    padding-right: 3px;
+    /*display:none;*/
+    margin-top: 10px;
+}
+/**************************************************/
+
+
+/*Zona de adaugat elemente*/
+.fg-edit-palette div[ng-include="renderInfo.templateUrl"] {
+    display: none;
+}
+
+.fixed-font-size{
+    font-size:23px;
+    text-align: center;
+    vertical-align: middle;
+    /*padding-top:10px;*/
+}
+
+span.fixed-font-size:before{
+    margin-bottom: 0;
+}
+
+.ro-number:before{
+    content: "09";
+    font-weight: 700;
+}
+
+.fg-edit-palette{
+    border-radius:4px;
+    background-color: #0C99E4;
+}
+
+.fa-th-list, .fa-list, .fa-align-justify{
+    margin-top:2px;
+    font-size:19px;
+
+}
+
+.fa-check-square, .fa-dot-circle-o{
+    font-size:19px;
+
+}
+
+.fa-unlock-alt{
+    margin-top: 4px;
+    font-size:18px;
+}
+
+.fa-envelope{
+    margin-top: -1px;
+    font-size: 19px;
+}
+
+.fa-font{
+    font-size:18px;
+    margin-top:1px;
+}
+
+
+/*Butoane elemente formular*/
+.fg-field.ng-scope {
+    width: 30px;
+    float: left;
+    padding: 0;
+    border: none;
+    background: none;
+    margin-top:10px ;
+    margin-bottom: -3px;
+    margin-left: 10px;
+    margin-right: 3px;
+}
+
+div[ng-repeat="template in templates | filter:templateFilter"] > div.fg-field-overlay > div > button{
+    background-color: #0C99E4;
+    width: 30px;
+    height: 30px;
+}
+
+.fg-field.ng-scope:hover{
+    background: none;
+}
+
+/*Label-uri butoane*/
+.fg-edit-palette div[fg-field="template"]{
+    display: none;
+}
+/**************************************************/
+
+/*Zona de editat formular*/
+/*Marele X din zona de editat formular*/
+.fg-edit-canvas-area-empty-x{
+    display:none;
+}
+
+.fg-edit-canvas-area-empty{
+    color:white;
+    background-color: #0C99E4;
+    border-color: #665aac;
+    padding: 5px;
+    content:"Click on one of the available elements from the pallete bar.";
+
+}
+p.lead.hidden-phone{
+    font-size:18px;
+    margin: 0;
+}
+
+div[fg-null-form]{
+    padding-bottom: 0;
+    padding-top:    0;
+}
+
+/*Nav bar-ul cu schema editor si preview mode*/
+#formular > div > div.ng-isolate-scope > div.fg-tabs.tabbable > ul.nav-tabs{
+    display: none;
+}
+
+.fg-tabs .tab-content{
+    border:0;
+}
+
+.fg-edit-canvas-area {
+    border: 0;
+    padding:15px;
+}
+
+.alert-primary{
+    color:white;
+    background-color: #0C99E4;
+    border-color: #665aac;
+    padding: 5px;
+}
+
+.fg-field-properties-container.visible{
+    width: 100%;
+    height: 100%;
+}
+.fg-field-properties{
+    background: none;
+    border:none;
+}
+
+.fg-dropdown{
+    z-index: 1050;
+}
+
+
+/*
+    Sterge paddingul de 15px setat cu regula div[fg-null-form] de mai sus drept urmare nu mai avem nevoie pe moment
+    de aceasta regula!
+
+.fg-field.fg-field-text.fg-edit-canvas-field{
+    padding-top:0;
+    padding-bottom: 0;
+}*/
+
+/*
+    rezolvam problema campurilor din formularul de editare legata de inaltime zero
+*/
+.fg-field-inner.form-group:after{
+    content: "";
+    clear: both;
+    display: block;
+}
+
+
+.fg-tabs-pane.ng-hide{
+    display: inherit;
+}
+/**************************************************/

@@ -1,0 +1,87 @@
+<div ng-controller="formCreatorController">
+	<!--Page titlte-->
+	<div class="bg-light lter b-b wrapper-md ng-scope pageTitle">
+		<h1 class="m-n font-thin h3">Entities Management</h1>
+	</div>
+
+	<!--Preloading/ Not loading message placeholder-->
+	<div ng-show="fetching">
+		<div class="wrapper-md ng-scope">
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					Fetching...
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="wrapper-md ng-scope" ng-hide="fetching">
+		<!--A small title for users section-->
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				Search, Create or Update Entities
+			</div>
+
+			<!--Search section | The simple one-->
+			<div class="panel-body b-b b-light">
+				<div class="col-lg-6">
+					<div class="input-group">
+						<input id="filter" type="text" class="form-control" ng-model="searchFilter.username"
+							   placeholder="Search for...">
+						<span class="input-group-btn">
+                                <button class="btn btn-primary" ng-click="startFilter()" type="button">Search</button>
+                              </span>
+					</div>
+				</div>
+			</div>
+
+			<!--Create new form button-->
+			<div class="panel-body b-b b-light">
+				<div class="col-lg-6" style="float: right">
+					<input style="float: right" class="btn btn-default btn-primary" ng-click="modalForm({})" type="button" value="Create new entity" ng-show="formsPermissions.add">
+				</div>
+			</div>
+
+			<div class="alert alert-info noFormsAlert" ng-show="forms.length==0">There are no entities yet. Add a new one by clicking <a ng-click="modalForm({})">here</a>.</div>
+
+			<div ng-show="forms.length>0">
+				<!--FORMS TABLE | Generated with footable JS Lib-->
+				<table class="table footable m-b-none default table-striped" data-filter="#filter" data-filtering="true" data-paging="true" data-sorting="true" data-page-size="5" data-limit-navigation="3" id="formsTable">
+					<thead>
+					<tr>
+						<th>Title</th>
+						<th data-hide="phone,tablet" data-sort-ignore="true">Description</th>
+						<th data-hide="phone,tablet">Date</th>
+						<th data-sort-ignore="true" ng-show="formsPermissions.edit">Actions</th>
+					</tr>
+					</thead>
+					<tbody>
+					<tr ng-repeat="form in forms track by $index" class="footable-even"
+						style="display: table-row;" redraw-table>
+
+						<td>{{form.title}}</td>
+						<td>{{form.description}}</td>
+						<td>{{humanReadableDate(form)}}</td>
+						<td ng-show="formsPermissions.edit">
+							<input type="button" class="btn btn-info btn-xs" ng-click="modalForm(form)" value="Edit">
+						</td>
+					</tr>
+					</tbody>
+
+					<tfoot>
+					<tr class="footable-row-detail">
+						<td colspan="5">
+							<div class="text-center hide-if-no-paging">
+								<ul class="pagination"></ul>
+							</div>
+						</td>
+					</tr>
+					</tfoot>
+
+				</table>
+			</div>
+
+
+		</div>
+	</div>
+</div>

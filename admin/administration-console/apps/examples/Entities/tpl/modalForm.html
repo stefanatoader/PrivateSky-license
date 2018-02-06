@@ -1,0 +1,283 @@
+<div class="modal fade" id="modalForm">
+    <div class="modal-dialog">
+
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <button type="button" class="close" ng-click="closeForm()" style="margin-top: 0">&times;</button>
+                <button id="optionsButton" class="btn btn-primary btn-xs pull-right" style="margin-right: 10px;"><i class="fa fa-cog"></i></button>
+
+                <h4 class="modal-title">Create Entity</h4>
+            </div>
+
+            <div class="modal-body">
+
+                <accordion>
+                    <accordion-group heading="Options" is-open="true">
+
+                        <div class="form-group">
+                            <label class="col-sm-6 col-xs-6 col-lg-6 col-md-6 control-label" style="padding-left: 10px;">Edit after submit</label>
+                            <div class="col-sm-6 col-xs-6 col-lg-6 col-md-6 ">
+                                <label class="i-switch bg-primary m-t-xs m-r" style="margin-left: 7px;">
+                                    <input type="checkbox" ng-model="form.modified" checked>
+                                    <i></i>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="clearfix"></div>
+
+                        <div class="form-group" ng-show="formsPermissions.disable">
+                            <label class="col-sm-6 col-xs-6 col-lg-6 col-md-6 control-label" style="padding-left: 10px;">Users can submit</label>
+                            <div class="col-sm-6 col-xs-6 col-lg-6 col-md-6">
+                                <label class="i-switch bg-success m-t-xs m-r" style="margin-left: 7px;">
+                                    <input type="checkbox" ng-model="form.is_active" checked>
+                                    <i></i>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="clearfix"></div>
+
+                        <div class="form-group row">
+                            <label class="col-sm-6 col-xs-6 col-lg-6 col-md-6 marginFix">Select an user zone: </label>
+                            <select ng-model="form.zone" class="btn btn-primary" required class="col-sm-6 col-xs-6 col-lg-6 col-md-6">
+                                <option ng-repeat="zone in zones" value="{{zone}}" ng-selected="form.zone==zone">{{zone | userMappingZones}}</option>
+                            </select>
+						</span>
+                        </div>
+
+                    </accordion-group>
+                </accordion>
+
+                <div id="loader">
+                    <img src="images/loader.gif">
+                </div>
+
+                <form name="formCreator" class="form-validation" id="formular">
+                    <div class="mainFieldsForms">
+                        <div ng-class="{'has-error': formCreator.title.$dirty && formCreator.title.$invalid}">
+                            <input id="title" name="title" ng-model="form.title" type="text"
+                                   class="form-control no-border formTitle"
+                                   placeholder="Untitled Entity" required style="height: 40px">
+                            <span class="help-block " ng-show="formCreator.title.$dirty && formCreator.title.$invalid">
+							<span ng-show="formCreator.title.$dirty && formCreator.title.$invalid">
+								<span ng-show="formCreator.title.$error.required">Entity title is required.</span>
+							</span>
+						</span>
+                        </div>
+                        <div ng-class="{'has-error': formCreator.description.$dirty && formCreator.description.$invalid}">
+                            <input id="description" name="description" ng-model="form.description" type="text"
+                                   class="form-control no-border formDescription"
+                                   placeholder="A short description" required>
+                            <span class="help-block "
+                                  ng-show="formCreator.description.$dirty && formCreator.description.$invalid">
+							<span ng-show="formCreator.description.$dirty && formCreator.description.$invalid">
+								<span ng-show="formCreator.description.$error.required">Entity description is required.</span>
+							</span>
+						</span>
+                        </div>
+                    </div>
+
+                    <div style="margin-top: 10px;">
+                        <div fg-tabs>
+                            <div fg-tabs-pane="Schema Editor">
+                                <form novalidate class="form-horizontal">
+                                    <div fg-edit fg-schema="form.structure"></div>
+                                </form>
+                            </div>
+                            <div fg-tabs-pane="Preview">
+                                <form novalidate class="form-horizontal" name="exampleForm">
+                                    <legend> {{form.name}}</legend>
+                                    <fieldset>
+                                        <div fg-form fg-form-data="form.data" fg-schema="form.structure"></div>
+                                    </fieldset>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+
+            </div>
+
+            <div class="modal-footer" style="text-align: left">
+                <a class="btn btn-lg btn-primary btn-block" ng-click="submitForm()" ng-hide="form.formId">Create new entity</a>
+                <a class="btn btn-lg btn-primary btn-block" ng-click="submitForm()" ng-show="form.formId">Save changes</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Form editor zone -->
+<script>
+    // Vars
+    var loading = false;
+    var formular = $("#formular");
+    var loader = $("#loader");
+
+    // Helper Functions
+    function switchView() {
+        loading = !loading;
+
+        if (loading) {
+            loader.show();
+            formular.hide();
+        } else {
+            loader.hide();
+            formular.show();
+        }
+    }
+
+
+    $(document).ready(function () {
+
+
+        $('#modalForm').modal({
+            backdrop: 'static',
+            keyboard: false
+        });
+
+        switchView();
+        setTimeout(function () {
+            var options = $(".panel-title");
+            var collapseElement = $(".panel-collapse");
+            var optBtn = $("#optionsButton");
+            var opened = collapseElement.hasClass('in');
+            
+            function toggleVisibility() {
+                if(opened){
+                    collapseElement.attr('style', 'display:inline');
+                }else{
+                    collapseElement.attr('style', 'display:none');
+                }
+                opened = !opened;
+            }
+            options.attr("style","display:none");
+
+            toggleVisibility();
+
+            optBtn.on('click',function () {
+                $(".accordion-toggle").click();
+            });
+
+            options.on('click', function () {
+                toggleVisibility();
+            });
+
+
+
+
+            // Editor Schema zone
+            // Init steps
+            $("legend").hide();
+            $("a[ng-click=\"setCategory(null)\"]").click();
+            switchView();
+
+
+            // Customize elements from palette bar
+            var fieldTypesSelector = "[ng-repeat=\"template in templates | filter:templateFilter\"]";
+            var fieldTypes = $(fieldTypesSelector);
+            var elementSelector = "div[ng-include=\"renderInfo.templateUrl\"]";
+            var buttonSelector = "button[ng-click=\"schemaCtrl.addField(template)\"]";
+
+            var customizations = {
+                "TEXTAREA": {
+                    buttonTitle: "Add a textarea.",
+                    iconClass: "fa fixed-font-size fa-align-justify"
+                },
+                "SELECT": {
+                    buttonTitle: "Add a multiple selection field.",
+                    iconClass: "fa fixed-font-size fa-list"
+                },
+                "DIV": {
+                    switch: [{
+                        method: "hasClass",
+                        args: ["checkbox"],
+                        case: {
+                            true: {
+                                buttonTitle: "Add a checkbox.",
+                                iconClass: "fa fixed-font-size fa-check-square"
+                            },
+                            false: {
+                                buttonTitle: "Add a checkbox list.",
+                                iconClass: "fa fixed-font-size fa-th-list"
+                            }
+                        }
+                    },
+                        {
+                            method: "hasClass",
+                            args: ["radio"],
+                            case: {
+                                true: {
+                                    buttonTitle: "Add a radio group.",
+                                    iconClass: "fa fixed-font-size fa-dot-circle-o"
+                                }
+                            }
+                        }
+
+                    ]
+                },
+                "INPUT": {
+                    switch: [{
+                        method: "prop", args: ["type"], case: {
+                            "email": {
+                                buttonTitle: "Add an email field.",
+                                iconClass: "fa fixed-font-size fa-envelope"
+                            }, "password": {
+                                buttonTitle: "Add a password field.",
+                                iconClass: "fa fixed-font-size fa-unlock-alt"
+                            },
+                            "text": {
+                                buttonTitle: "Add a text field.",
+                                iconClass: "fa fixed-font-size fa-font"
+                            }
+                        }
+                    },
+                        {
+                            method: "hasClass", args: ["ng-valid-number"], case: {
+                            true: {
+                                buttonTitle: "Add a number type field.",
+                                iconClass: "fixed-font-size ro-number fa"
+                            }
+
+                        }
+                        }
+                    ]
+                }
+            };
+            fieldTypes.each(function (index, field) {
+                field = $(field);
+                var element = field.find(elementSelector);
+                var button = field.find(buttonSelector);
+                var icon = button.find("span");
+
+                var child = element[0].children.length ? element[0].children[0] : null;
+
+                if (child) {
+                    var tag = child.tagName;
+                    var custom = customizations[tag];
+                    if (custom) {
+                        if (custom.switch) {
+                            for (var i = 0; i < custom.switch.length; i++) {
+                                var method = custom.switch[i].method;
+                                var args = custom.switch[i].args;
+                                var props = custom.switch[i].case;
+                                if (method) {
+                                    var result = $(child)[method].apply($(child), args);
+                                    if (props[result]) {
+                                        $(button).attr('title', props[result].buttonTitle);
+                                        $(icon).attr('class', props[result].iconClass);
+                                    }
+                                }
+                            }
+
+                        } else {
+                            $(button).attr('title', custom.buttonTitle);
+                            $(icon).attr('class', custom.iconClass);
+                        }
+                    }
+                }
+            });
+
+
+        }, 400);
+    });
+</script>
