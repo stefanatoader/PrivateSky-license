@@ -1,0 +1,19 @@
+exports.interests = {
+	interestId:{
+		type:"string",
+		length:255,
+		pk:true
+	},
+	userId:{
+		type:"string",
+		length:255
+	},
+	eventId:{
+		type:"string",
+		length:255
+	},
+	date:{
+		type:"string",
+		length:255
+	}
+};

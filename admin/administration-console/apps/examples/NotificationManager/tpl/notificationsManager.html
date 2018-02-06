@@ -1,0 +1,113 @@
+<div ng-controller="notificationsController">
+    <div class="ng-scope" ui-view="">
+
+        <div class="bg-light lter b-b wrapper-md ng-scope pageTitle">
+            <h1 class="m-n font-thin h3">Notifications Manager</h1>
+        </div>
+
+        <div ng-show="fetching">
+            <div class="wrapper-md ng-scope">
+                <div class="panel panel-default">
+                    <div class="panel-heading">Fetching user zones...</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="wrapper-md ng-scope" ng-hide="fetching">
+            <div class="container-fluid">
+                <div class="panel panel-default" style="margin-top: 15px;">
+                    <div class="panel-heading font-bold">Send notification</div>
+                    <div class="panel-body">
+
+
+                        <form name="CreateNotification" class="form-validation">
+                            <div class="form-group">
+
+                                    <div class="row" style="margin-bottom: 10px;">
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label">Title</label>
+                                            <div ng-class="{'has-error': CreateNotification.title.$dirty && CreateNotification.title.$invalid}" class="col-sm-10">
+                                                <input id="title" name="title" ng-model="notification.title" type="text" class="form-control" placeholder="Notification title">
+                                                <span class="help-block" ng-show="CreateNotification.title.$dirty && CreateNotification.title.$invalid">
+                                                <span ng-show="CreateNotification.title.$dirty && CreateNotification.title.$invalid">
+                                                    <span ng-show="CreateNotification.title.$error.required">Title field is required</span>
+                                                </span>
+								            </span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row" style="margin-bottom: 10px;">
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label">Description</label>
+                                            <div ng-class="{'has-error': CreateNotification.description.$dirty && CreateNotification.description.$invalid}" class="col-sm-10">
+                                                <input id="description" name="description" ng-model="notification.description" type="text" class="form-control" placeholder="Notification description">
+                                                <span class="help-block" ng-show="CreateNotification.description.$dirty && CreateNotification.description.$invalid">
+                                                <span ng-show="CreateNotification.description.$dirty && CreateNotification.description.$invalid">
+                                                    <span ng-show="CreateNotification.description.$error.required">Description field is required</span>
+                                                </span>
+								            </span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row" style="margin-bottom: 10px;">
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label">Zone</label>
+                                            <div ng-class="{'has-error': CreateNotification.zone.$dirty && CreateNotification.zone.$invalid}" class="col-sm-10">
+                                                <select id='zone' name="zone" ng-model="notification.zone" class="btn btn-primary" required>
+                                                    <option ng-repeat="zone in zones" value="{{zone}}">{{zone | userMappingZones}}</option>
+                                                </select>
+                                                <span class="help-block" ng-show="CreateNotification.zone.$dirty && CreateNotification.zone.$invalid">
+										        <span ng-show="CreateNotification.zone.$error.required">User zone is required.</span>
+								            </span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row" style="margin-bottom: 10px;">
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label">Action</label>
+                                            <div ng-class="{'has-error': CreateNotification.actionType.$dirty && CreateNotification.actionType.$invalid}" class="col-sm-10">
+                                                <select id='actionType' name="actionType" ng-model="notification.actionType" class="btn btn-primary" required>
+                                                    <option value="openUrl">Open url</option>
+                                                    <option value="runSwarm">Execute flow</option>
+                                                </select>
+                                                <span class="help-block" ng-show="CreateNotification.actionType.$dirty && CreateNotification.actionType.$invalid">
+										        <span ng-show="CreateNotification.actionType.$error.required">Action type is required.</span>
+								            </span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div ng-show="notification.actionType" class="row" style="margin-bottom: 10px;">
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label">Action argument</label>
+                                            <div ng-class="{'has-error': CreateNotification.actionArgument.$dirty && CreateNotification.actionArgument.$invalid}" class="col-sm-10">
+                                                <input id="actionArgument" name="actionArgument" ng-model="notification.actionArgument" type="text" class="form-control" placeholder="Action argument">
+                                                <span class="help-block" ng-show="CreateNotification.actionArgument.$dirty && CreateNotification.actionArgument.$invalid">
+                                                <span ng-show="CreateNotification.actionArgument.$dirty && CreateNotification.actionArgument.$invalid">
+                                                    <span ng-show="CreateNotification.actionArgument.$error.required">Action argument is required</span>
+                                                </span>
+								            </span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                <label style="{color:red}" ng-show="errorOccured">An error occured</label>
+                                <label style="{color:green}" ng-show="notificationWasSent">Notification was sent</label>
+                            </div>
+                        </form>
+
+                        <div class="panel-body b-b b-light">
+                            <div class="col-lg-6" style="float: right">
+                                <button style="float: right" class="btn btn-lg btn-primary" ng-click="sendNotification()" ng-disabled='CreateNotification.$invalid' type="button">Send notification</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>

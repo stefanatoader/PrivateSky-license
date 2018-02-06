@@ -1,0 +1,26 @@
+exports.attendees = {
+	attendId:{
+		type:"string",
+		length:255,
+		pk:true
+	},
+	userId:{
+		type:"string",
+		length:255
+	},
+	eventId:{
+		type:"string",
+		length:255
+	},
+	attend:{
+		type:"string",
+		length:255
+	},
+	answer:{
+		type:"JSON"
+	},
+	date:{
+		type:"string",
+		length:255
+	}
+};
