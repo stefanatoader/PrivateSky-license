@@ -1,0 +1,1 @@
+exports.defaults = {Form: require('./Forms').forms};

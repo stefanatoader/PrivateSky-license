@@ -1,0 +1,82 @@
+{
+  "name": "swarmesb",
+  "description": "swarmesb demo package",
+  "version": "2.0.2",
+  "homepage": "https://github.com/salboaie/SwarmESB",
+  "author": {
+    "name": "Alboaie Sinica",
+    "email": "salboaie@gmail.com"
+  },
+  "contributors": [
+    {
+      "name": "Alboaie Sinica",
+      "email": "salboaie@gmail.com"
+    }
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/salboaie/asynchron.git"
+  },
+  "bugs": {
+    "email": "salboaie@gmail.com",
+    "url": "https://github.com/salboaie/asynchron/issues"
+  },
+  "directories": {
+    "lib": "./lib"
+  },
+  "engines": {
+    "node": ">=0.12.0"
+  },
+  "main": "./adapters/Core.js",
+  "licenses": [
+    {
+      "type": "GPL",
+      "url": "http://www.gnu.org/licenses/gpl.html"
+    }
+  ],
+  "_id": "swarmesb@2.0.1",
+  "dependencies" : {
+    "swarmcore"     :    ">=2.2.6",
+    "acl-magic"    :     ">=1.0.10",
+    "apersistence" :      ">=1.0.24",
+    "semantic-firewall" : ">=0.5.1",
+    "dateformat"      : ">=1.0.11",
+    "commander"       :   ">=2.8.1",
+    "moment"        : ">=2.10.3",
+    "rts"       :">=0.0.0",
+    "tmp"       :">=0.0.0",
+    "callflow"  :">=0.5.4",
+    "whys" : ">=0.2.1",
+    "transrest": ">=0.5.0",
+	"checksum" :">=0.1.0",
+	"uuid":">=2.0.0",
+    "q": "=1.2.0",
+    "asynchron": ">=1.0.10",
+    "double-check": ">=0.1.5",
+    "acl-magic": ">=1.0.9",
+    "clone": ">=0.1.8",
+    "MD5": ">=1.2.0",
+    "nodemailer": ">=0.5.2",
+    "node-uuid": ">=1.4.0",
+    "redis": ">=2.7.1",
+    "socket.io": ">=1.2.1",
+    "limiter2": ">=1.1.0",
+    "request": ">=2.53.0",
+    "tmp": ">=0.0.24",
+    "commander": ">=2.8.1",
+    "pubsubshare": ">=0.6.0",
+    "https-auto": ">=0.5.5",
+    "safebox": ">=0.2.1",
+    "transrest": ">=0.5.0",
+    "mysql":">=0.0.0",
+    "swarm-winston": "git+https://mastaleru@github.com/CiprianTalmacel/swarm-winston.git#master"
+  },
+  "optionalDependencies": {},
+  "_engineSupported": true,
+  "_npmVersion": "1.1.12",
+  "_nodeVersion": "v0.6.14",
+  "_defaultsLoaded": true,
+  "dist": {
+    
+  }
+}
