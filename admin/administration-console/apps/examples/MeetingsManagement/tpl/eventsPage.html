@@ -1,0 +1,107 @@
+<div ng-controller="eventsController">
+    <!--Page titlte-->
+    <div class="bg-light lter b-b ng-scope" style="padding: 5px;">
+        <div class="row">
+            <div class="col-xs-12 col-md-6 col-lg-6 col-sm-12" style="padding-top: 10px; padding-left: 30px; padding-bottom: 10px;">
+                <h1 class="m-n font-thin h3">Meetings Management</h1>
+            </div>
+            <div class="col-xs-12 col-md-6 col-lg-6 col-sm-12">
+                <!--<span class="alert alert-info pull-right" ng-hide="event.length>0" style="padding: 5px; margin: 10px;">There are no events. Please add an event by clicking the first tile.</span>-->
+                <div class="row" style="padding-right: 20px;" ng-show="events.length>1">
+                    <div class="col-xs-12 col-md-8 col-lg-8 col-sm-12" style="padding-top: 13px;">
+                        <div class="pull-right">
+                            <span class="btn-default btn-xs btn-cursor" ng-click="filterEvents('2')">PUBLISHED</span>
+                            <span class="btn-default btn-xs btn-cursor" ng-click="filterEvents('1')">PENDING</span>
+                            <span class="btn-default btn-xs btn-cursor" ng-click="filterEvents('3')">DRAFTS</span>
+                            <span class="btn-default btn-xs btn-cursor" ng-click="filterEvents('0')">UNPUBLISHED</span>
+                            <span class="btn-default btn-xs btn-cursor btn-selected" ng-click="filterEvents('5')">ALL</span>
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-md-4 col-lg-4 col-sm-12">
+                        <!-- search form -->
+                        <form class="navbar-form navbar-form-sm navbar-left pull-right" ui-shift="prependTo" target=".navbar-collapse" role="search" style="box-shadow: none;">
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <input type="text" ng-model="selected" class="form-control input-sm bg-light no-border rounded padder" placeholder="Search meetings...">
+                                    <span class="input-group-btn"><button type="submit" class="btn btn-sm bg-light rounded"><i class="fa fa-search"></i></button></span>
+                                </div>
+                            </div>
+                        </form>
+                        <!-- / search form -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--Preloading/ Not loading message placeholder-->
+    <div ng-show="fetching">
+        <div class="wrapper-md ng-scope">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    Fetching...
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="wrapper-md ng-scope" ng-hide="fetching">
+        <div class="row" ng-show="events.length>0">
+            <div ng-repeat="event in events">
+                <div class="col-md-4 col-sm-12 col-lg-4 col-xs-12">
+                    <div class="panel b-a" style="margin: 10px;">
+                        <div class="item m-l-n-xxs m-r-n-xxs">
+                            <div class="status" ng-switch="event.state" ng-show="event.state!='4'">
+                                <span class="badge state state-unpublished" ng-switch-when="0">UNPUBLISHED</span>
+                                <span class="badge state state-pending" ng-switch-when="1" style=" ">PENDING</span>
+                                <span class="badge state state-published" ng-switch-when="2">PUBLISHED</span>
+                                <span class="badge state state-draft" ng-switch-when="3">DRAFT</span>
+                            </div>
+
+                            <div class="bottom wrapper" ng-class="{'text-white':event.state!='4'}">
+                                <div class="text-u-c h3 m-b-sm">{{event.title}}</div>
+                                <div>{{descriptionTrim(event)}}</div>
+                            </div>
+                            <img ng-hide="event.headline" ng-src="http://via.placeholder.com/1000x1000/1c2b36/58666e?text=No+headline" class="img-full" style="max-height: 250px; max-width: 455px;">
+                            <img ng-show="event.headline" ng-src="{{event.headline}}" class="img-full" style="max-height: 250px; max-width: 455px;">
+                        </div>
+
+                        <!--FOR PENDING AND UNPUBLISHED STATE-->
+                        <div class="hbox text-center b-b b-light text-sm" ng-show="event.state=='1' || event.state=='0' || event.state=='3'">
+                            <a href ng-click="changeState(event)" class="col padder-v text-muted b-r b-light">
+                                <i class="icon-power block m-b-xs fa-2x"></i><span>PUBLISH</span>
+                            </a>
+                            <a href ng-click="previewEvent(event)" class="col padder-v text-muted b-r b-light">
+                                <i class="icon-eye block m-b-xs fa-2x"></i><span>PREVIEW</span>
+                            </a>
+                            <a href ng-click="editEvent(event)" class="col padder-v text-muted b-r b-light">
+                                <i class="icon-settings block m-b-xs fa-2x"></i><span>EDIT</span>
+                            </a>
+                        </div>
+
+                        <!--FOR PUBLISHED STATE-->
+                        <div class="hbox text-center b-b b-light text-sm" ng-show="event.state=='2'">
+                            <a href ng-click="previewEvent(event)" class="col padder-v text-muted b-r b-light">
+                                <i class="icon-eye block m-b-xs fa-2x"></i><span>PREVIEW</span>
+                            </a>
+                            <a href ng-click="editEvent(event)" class="col padder-v text-muted b-r b-light">
+                                <i class="icon-settings block m-b-xs fa-2x"></i><span>EDIT</span>
+                            </a>
+                            <a href ng-click="changeState(event)" class="col padder-v text-muted b-r b-light">
+                                <i class="icon-power block m-b-xs fa-2x"></i><span>UNPUBLISH</span>
+                            </a>
+                        </div>
+
+                        <!--FOR ADD STATE-->
+                        <div class="hbox text-center b-b b-light text-sm" ng-show="event.state=='4'">
+                            <a class="col padder-v text-muted b-r b-light" ng-click="addEvent()" style="padding-top: 24px; padding-bottom: 20px;"><i class="icon-plus block m-b-xs fa-2x"></i></a>
+                            <a class="col padder-v text-muted b-r b-light" ng-click="addEvent()" style="padding-top: 24px; padding-bottom: 20px;"><i class="icon-plus block m-b-xs fa-2x"></i></a>
+                            <a class="col padder-v text-muted b-r b-light" ng-click="addEvent()" style="padding-top: 24px; padding-bottom: 20px;"><i class="icon-plus block m-b-xs fa-2x"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

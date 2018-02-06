@@ -1,0 +1,107 @@
+<div ng-controller="newsManagerController">
+
+	<div class="ng-scope" ui-view="">
+		<!--Page titlte-->
+		<div class="bg-light lter b-b wrapper-md ng-scope pageTitle">
+			<h1 class="m-n font-thin h3">News Manager</h1>
+		</div>
+
+		<!--Preloading/ Not loading message placeholder-->
+		<div ng-show="fetching">
+			<div class="wrapper-md ng-scope">
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						Fetching...
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="wrapper-md ng-scope" ng-hide="fetching">
+
+			<!--A small title for news section-->
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					Search, Create or Update News
+				</div>
+
+				<!--Search section | The simple one-->
+				<div class="panel-body b-b b-light">
+					<div class="col-lg-6">
+						<div class="input-group">
+							<input id="filter" type="text" class="form-control" ng-model="searchFilter.title"
+								   placeholder="Search for...">
+							<span class="input-group-btn">
+                                <button class="btn btn-primary" ng-click="startFilter()" type="button">Search</button>
+                              </span>
+						</div>
+					</div>
+				</div>
+
+				<!--Create new button-->
+				<div class="panel-body b-b b-light">
+					<div class="col-lg-6 pull-right">
+						<button class="btn btn-default btn-primary pull-right" ng-click="newsForm({},true)" type="button">
+							Create new
+						</button>
+					</div>
+				</div>
+
+				<div class="alert alert-info" ng-hide="newsToDisplay.length" style="text-align: center; margin-left: 20px; margin-right: 20px;">
+					There are no news. Please add some <a href ng-click="newsForm({},true)">here</a>.
+				</div>
+
+				<div ng-show="newsToDisplay.length">
+					<!--NEWS TABLE | Generated with footable JS Lib-->
+					<table class="table footable m-b-none default table-striped" id="newsTable" data-filter="#filter"
+						   data-filtering="true" data-paging="true" data-sorting="true" data-page-size="5"
+						   data-limit-navigation="3">
+						<thead>
+						<tr>
+							<th>Title</th>
+							<th data-hide="phone,tablet" data-sort-ignore="true">Body</th>
+							<th data-hide="phone,tablet">Author</th>
+							<th data-sort-initial="true">Date</th>
+							<th data-hide="phone,tablet">Status</th>
+							<th data-sort-ignore="true">Actions</th>
+						</tr>
+						</thead>
+						<tbody>
+						<tr ng-repeat="item in newsToDisplay track by $index" class="footable-even"
+							style="display: table-row;" redraw-table>
+							<td>{{item.title}}</td>
+							<td>{{stripHTMLTagsBody(item, 30)}}</td>
+							<td>{{item.lastName + ' ' +item.firstName}}</td>
+							<td>{{humanReadableDate(item,format)}}</td>
+							<td>
+								<span ng-switch="item.is_active">
+									<span ng-switch-when="1" class="label bg-success">Active</span>
+									<span ng-switch-when="0" class="label bg-dark">Inactive</span>
+								</span>
+							</td>
+							<td>
+								<input type="button" class="btn btn-info btn-xs" ng-click="newsForm(item, true)" value="Edit">
+								<input type="button" class="btn btn-primary btn-xs" ng-click="newsForm(item, false)" value="Preview">
+								<input type="button" class="btn btn-success btn-xs" ng-click="notifyNews(item)" value="Notify">
+							</td>
+
+						</tr>
+						</tbody>
+
+						<tfoot>
+						<tr class="footable-row-detail">
+							<td colspan="5">
+								<div class="text-center hide-if-no-paging">
+									<ul class="pagination"></ul>
+								</div>
+							</td>
+						</tr>
+						</tfoot>
+
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+

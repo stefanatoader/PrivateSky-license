@@ -1,0 +1,51 @@
+<div ng-controller="editController">
+    <!--Page titlte-->
+    <div class="bg-light lter b-b ng-scope" style="padding: 5px;">
+        <div class="row">
+            <div class="col-xs-6 col-md-6 col-lg-6 col-sm-6 headerTitle">
+                <h1 class="m-n font-thin h3" ng-hide="event.eventId">Add a new event</h1>
+                <h1 class="m-n font-thin h3" ng-show="event.eventId && event.title">Edit '{{event.title}}'</h1>
+                <h1 class="m-n font-thin h3" ng-show="event.eventId && !event.title">Edit 'Untitled event'</h1>
+            </div>
+            <div class="col-xs-6 col-md-6 col-lg-6 col-sm-6" style="padding: 10px;">
+                <div class="pull-right" style="margin-right: 15px;"><span class="btn btn-default btn-cursor" ng-click="gotoGrid()">Go to grid</span></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid">
+        <div class="panel panel-default" style="margin-top: 15px;">
+            <div class="panel-body">
+                <div class="col-md-10">
+                    <form novalidate class="form-horizontal" name="eventSubmit">
+                        <div class="col-md-offset-3" style="margin-bottom: 10px; padding-right: 10px;">
+                            <input id="title" name="title" ng-model="event.title" type="text" class="form-control no-border formTitle" placeholder="Untitled event" required>
+                            <textarea id="description" style="overflow:hidden; resize:none" name="description" ng-model="event.description" type="text" class="form-control no-border formDescription" rows="4" placeholder="A short description" required></textarea>
+                        </div>
+                        <div>
+                            <!--<div class="row">-->
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label ng-binding ng-scope">Headline</label>
+                                    <div class="col-sm-9">
+                                        <input class="form-control ng-pristine ng-untouched ng-valid ng-scope" type="url" id="headline" placeholder="Event's image" ng-model="event.headline">
+                                    </div>
+                                </div>
+                            <!--</div>-->
+
+                            <div class="clearfix"></div>
+                            <fieldset>
+                                <fg-form fg-form-data="event.structure" fg-schema="structure">
+                            </fieldset>
+                        </div>
+
+                        <div class="col-md-offset-3" style="padding-left: 10px;">
+                            <button class="btn btn-primary ng-click-active" type="button" ng-click="submitEvent()" ng-disabled="eventSubmit.$invalid">Submit</button>
+                            <button class="btn btn-default ng-click-active" type="button" ng-click="gotoGrid()">Cancel</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

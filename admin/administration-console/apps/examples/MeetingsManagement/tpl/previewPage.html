@@ -1,0 +1,169 @@
+<div ng-controller="previewController">
+    <div class="hbox hbox-auto-xs hbox-auto-sm">
+        <div class="col">
+            <div bg-img="{{event.headline}}">
+                <div class="wrapper-lg bg-white-opacity">
+                    <div class="row m-t">
+                        <div class="col-sm-7">
+                            <div class="clear m-b">
+                                <h1 style="color: #191919">{{event.title}}</h1>
+                            </div>
+                        </div>
+                        <div class="col-sm-5">
+                            <div class="pull-right pull-none-xs text-center">
+                                <a href class="m-b-md inline m">
+                                    <span class="h3 block font-bold">{{attendees}}</span>
+                                    <small>Attendees</small>
+                                </a>
+                                <a href class="m-b-md inline m">
+                                    <span class="h3 block font-bold">{{interests}}</span>
+                                    <small>Interested</small>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="stateIcon" ng-switch="event.state" ng-show="event.state!='4'">
+                            <span class="badge state state-unpublished" ng-switch-when="0">UNPUBLISHED</span>
+                            <span class="badge state state-pending" ng-switch-when="1" style=" ">PENDING</span>
+                            <span class="badge state state-published" ng-switch-when="2">PUBLISHED</span>
+                            <span class="badge state state-draft" ng-switch-when="3">DRAFT</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="wrapper bg-white b-b" id="navBar">
+                <div class="container">
+                    <ul class="nav nav-pills nav-sm" style="margin-left: 30px;">
+                        <li id="descriptionBtn"><a href>Description</a></li>
+                        <li id="detailsBtn"><a href>Details</a></li>
+                        <li id="commentsBtn"><a href>Comments</a></li>
+                        <li id="attendeesBtn"><a href>Attendees</a></li>
+                        <li id="contactBtn"><a href>Contact</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-9 col-sm-12 col-xs-12 col-md-9">
+
+                        <div class="delimContent" id="descriptionSection">
+                            <div class="wrapper">
+                                <legend>Description</legend>
+                                {{event.description}}
+                                {{event.description}}
+                                {{event.description}}
+                                {{event.description}}
+                                {{event.description}}
+                                {{event.description}}
+                                {{event.description}}
+                            </div>
+                        </div>
+
+                        <div class="delimContent" id="detailsSection">
+                            <div class="wrapper">
+                                <legend>Details</legend>
+                                <div ng-repeat="(key, value) in event.structure">
+                                    <span class="font-bold">{{capitalize(key)}}</span>: {{value}}
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="delimContent" id="commentsSection">
+                            <div class="wrapper">
+                                <legend>Comments</legend>
+                                <div class="alert alert-info" ng-hide="comments.length" style="text-align: center;">There are no comments.</div>
+                                <div class="row" style="width: 100%; padding-left: 30px;">
+                                    <h4>Submit your review</h4>
+                                    <div class="col" style="width: 100%">
+                                        <input id="commentMessage" model="commentMessage" class="form-control" ng-model="commentMessage"/>
+                                    </div>
+                                    <div class="col">
+                                        <button class="btn btn-default" ng-click="submitComment()">Submit</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="delimContent" id="attendeesSection">
+                            <div class="wrapper">
+                                <legend>Attendees</legend>
+
+                            </div>
+                        </div>
+
+                        <div class="delimContent" id="contactSection">
+                            <div class="wrapper">
+                                <legend>Organizer</legend>
+                                <div class="row">
+                                    <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2" >
+                                        <div class="thumb-lg">
+                                            <img ng-src="{{user.avatar}}" class="img-circle">
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
+                                        <div><h3 style="margin: 0;">{{user.firstName}} {{user.lastName}}</h3></div>
+                                        <div><span class="font-bold">Email: </span> {{user.email}}</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+                    </div>
+                    <div class="col-lg-3 col-sm-12 col-xs-12 col-md-3" style="padding-right: 45px; padding-top: 30px; padding-left: 0;">
+                        <!--</div>-->
+                        <div class="panel panel-default" id="sidebarSection">
+                            <div class="panel-heading" style="background-color: rgba(60,63,64,0.9); padding-bottom: 0;" id="sidebarHeading">
+                                <div class="row" style="text-align: center;">
+                                    <div class="col-sm-6 col-lg-6 col-md-6 col-xs-6" style="color:white;">
+                                        <div class="row">
+                                            <div class="col-sm-6 col-lg-6 col-md-6 col-xs-6"><i class="fa fa-users" style="color:#F39C0D; margin-left: 10px;"></i></div>
+                                            <div class="col-sm-6 col-lg-6 col-md-6 col-xs-6"><span style="float: left">{{attendees}}</span></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6 col-lg-6 col-md-6 col-xs-6" style="color:white;">
+                                        <div class="row">
+                                            <div class="col-sm-6 col-lg-6 col-md-6 col-xs-6"><i class="fa fa-star" style="color:#F39C0D;margin-left: 10px;"></i></div>
+                                            <div class="col-sm-6 col-lg-6 col-md-6 col-xs-6"><span style="float: left">{{interests}}</span></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-12 col-lg-12 col-md-12 col-xs-12" style="padding: 0; margin-top: 10px; color:white;" ng-switch="event.state" ng-show="event.state!='4'">
+                                        <div class="state-unpublished" ng-switch-when="0">UNPUBLISHED</div>
+                                        <div class="state-pending" ng-switch-when="1" style=" ">PENDING</div>
+                                        <div class="state-published" ng-switch-when="2">PUBLISHED</div>
+                                        <div class="state-draft" ng-switch-when="3">DRAFT</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="panel-body">
+                                <div style="margin-bottom: 7px;">
+                                    <button class="btn btn-default btn-addon" style="min-width: 100%;" ng-click="gotoGrid()"><i class="icon-grid"></i>Grid</button>
+                                </div>
+                                <div style="margin-bottom: 7px;">
+                                    <button class="btn btn-default btn-addon" style="min-width: 100%;" ng-click="gotoEdit()"><i class="icon-pencil"></i>Edit</button>
+                                </div>
+                                <div style="margin-bottom: 7px;">
+                                    <button class="btn btn-success btn-addon state-published" style="min-width: 100%;" ng-show="event.state=='0'" ng-click="changeState(event)"><i class="icon-check"></i>Publish</button>
+                                    <button class="btn btn-success btn-addon state-published" style="min-width: 100%;" ng-show="event.state=='1'" ng-click="changeState(event)"><i class="icon-check" ></i>Publish</button>
+                                    <button class="btn btn-danger btn-addon state-unpublished" style="min-width: 100%;" ng-show="event.state=='2'" ng-click="changeState(event)"><i class="icon-check"></i>Unpublish</button>
+                                </div>
+                                <div style="margin-bottom: 7px;">
+                                    <button class="btn btn-success btn-addon" style="min-width: 100%;" ng-click="changeState(event)"><i class="icon-check"></i>Mark as draft</button>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+	function showPopup() {
+		var popup = document.getElementById("emailPopup");
+		popup.classList.toggle("show");
+	}
+</script>
+<script src="js/scripts/fixedNav.js"></script>

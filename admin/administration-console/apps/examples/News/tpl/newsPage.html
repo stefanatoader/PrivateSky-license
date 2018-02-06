@@ -1,0 +1,80 @@
+<div ng-controller="newsController">
+
+	<div class="ng-scope" ui-view="">
+		<!--Page titlte-->
+		<div class="bg-light lter b-b wrapper-md ng-scope pageTitle">
+			<h1 class="m-n font-thin h3">News</h1>
+		</div>
+
+		<!--Preloading/ Not loading message placeholder-->
+		<div ng-show="fetching">
+			<div class="wrapper-md ng-scope">
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						Fetching...
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="wrapper-md ng-scope" ng-hide="fetching">
+
+			<!--A small title for news section-->
+			<div>
+
+				<div class="alert alert-info" ng-hide="newsToDisplay.length"
+					 style="text-align: center; margin-left: 20px; margin-right: 20px;">
+					There are no news at this moment.
+				</div>
+
+				<div ng-show="newsToDisplay.length">
+					<div class="container" style="max-width: 750px;">
+						<div class="blog-post">
+							<div class="panel" ng-repeat="news in newsToDisplay | limitTo: totalItems track by $index">
+								<a ng-href="{{news.urlPage}}" target="_blank">
+									<img ng-show="news.image" ng-src="{{news.image}}"
+										 class="img-full">
+								</a>
+								<div class="wrapper-lg">
+									<h2 class="m-t-none" ng-show="news.title"><a ng-href="{{news.urlPage}}" target="_blank">{{news.title}}</a></h2>
+
+									<div ng-show="news.body">
+										<p style="display: inline" ng-hide="news.expanded" ng-bind-html="newsTrim(news)"></p>
+										<p style="display: inline" ng-show="news.expanded" ng-bind-html="news.body"></p>
+
+										<span ng-show="news.body.length > trimLength" ng-switch="news.expanded" class="pull-right" style="margin-bottom:10px;">
+												<a href="" ng-click="switch(news)" ng-switch-when="false" class="btn btn-xs btn-primary">Read More</a>
+												<a href="" ng-click="switch(news)" ng-switch-when="true" class="btn btn-xs btn-primary">Read Less</a>
+										</span>
+									</div>
+
+									<div ng-show="news.author || news.date">
+										<div class="line line-lg b-b b-light"></div>
+										<div class="text-muted">
+											<span ng-show="news.author">
+												<i class="fa fa-user text-muted"></i>
+												by <a href class="m-r-sm">{{news.firstName + ' ' + news.lastName}}</a>
+											</span>
+											<span ng-show="news.date" class="pull-right">
+												<i class="fa fa-clock-o text-muted"></i>
+												<span am-time-ago="news.date"></span>
+											</span>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div style="text-align:center">
+							<button class="btn btn-primary" ng-hide='totalItems>=newsToDisplay.length'
+									ng-click="loadMore()">Load more
+							</button>
+						</div>
+
+					</div>
+				</div>
+
+			</div>
+		</div>
+	</div>
+</div>
+

@@ -1,0 +1,123 @@
+<div class="modal fade">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" ng-click="close(false)" data-dismiss="modal"
+						aria-hidden="true">&times;</button>
+				<h4 ng-switch="edit" class="modal-title">
+					<span ng-switch-when="true">Publish news</span>
+					<span ng-switch-when="false">Preview of
+						<span style="font-weight: bold;" ng-show="news.title">{{news.title}}</span>
+						<span style="font-weight: bold;" ng-hide="news.title">Untitled</span>
+					</span>
+				</h4>
+			</div>
+
+			<div class="modal-body">
+				<form name="form" class="form-validation" ng-show="edit">
+					<div class="list-group-item" ng-class="{'has-error': form.title.$dirty && form.title.$invalid}">
+						<input id="title" name="title" ng-model="news.title" type="text" class="form-control no-border"
+							   placeholder="News title" required>
+						<span class="help-block " ng-show="form.title.$dirty && form.title.$invalid">
+							<span ng-show="form.title.$dirty && form.title.$invalid">
+								<span ng-show="form.title.$error.required">Title is required.</span>
+							</span>
+						</span>
+					</div>
+
+					<div class="wrapper-md">
+						<text-angular ng-model="news.body" class="btn-groups"
+									  ta-toolbar="[['bold','italics','underline','justifyLeft','justifyCenter','justifyRight','justifyFull','ul','ol','insertLink','insertImage','insertVideo']]"></text-angular>
+					</div>
+
+					<div class="list-group-item" ng-class="{'has-error': form.image.$dirty && form.image.$invalid}">
+						<input id="image" name="image" ng-model="news.image" type="url" class="form-control no-border"
+							   placeholder="Image URL" required>
+						<span class="help-block " ng-show="form.image.$dirty && form.image.$invalid">
+							<span ng-show="form.image.$dirty && form.image.$invalid">
+								<span ng-show="form.image.$error.required">Image is required.</span>
+								<span ng-show="form.image.$error.url">This is not a valid url.</span>
+							</span>
+						</span>
+					</div>
+
+					<div class="list-group-item" ng-class="{'has-error': form.urlPage.$dirty && form.urlPage.$invalid}">
+						<input id="urlPage" name="urlPage" ng-model="news.urlPage" type="url" class="form-control no-border"
+							   placeholder="Page url of post">
+						<span class="help-block " ng-show="form.urlPage.$dirty && form.urlPage.$invalid">
+							<span ng-show="form.urlPage.$dirty && form.urlPage.$invalid">
+								<span ng-show="form.urlPage.$error.url">This is not a valid url.</span>
+							</span>
+						</span>
+					</div>
+
+					<div class="list-group-item"
+						 ng-class="{'has-error': form.is_active.$dirty && form.is_active.$invalid}">
+						<label for="statusSelector">Status:</label>
+						<select id='statusSelector' name="is_active" ng-model="news.is_active" required>
+							<option value="1">Active</option>
+							<option value="0">Inactive</option>
+						</select>
+						<span class="help-block " ng-show="form.is_active.$dirty && form.is_active.$invalid">
+							<span ng-show="form.is_active.$error.required">The status field is required</span>
+						</span>
+					</div>
+
+					<div class="alert alert-info text-left" ng-show="form.$invalid">All field are required.</div>
+				</form>
+
+				<div class="blog-post" ng-hide="edit">
+					<div class="panel">
+						<a ng-href="{{news.urlPage}}" target="_blank">
+							<div ng-show="news.image"><img src="{{news.image}}" class="img-full"></div>
+							<div ng-hide="news.image">
+								<img src="https://placeholdit.imgix.net/~text?txtsize=33&txt=No+image+yet&w=560&h=200" class="img-full">
+							</div>
+						</a>
+						<div class="wrapper-lg">
+							<h2 class="m-t-none" ng-show="news.title"><a ng-href="{{news.urlPage}}" target="_blank">{{news.title}}</a></h2>
+							<h2 class="m-t-none" ng-hide="news.title"><a href>Untitled</a></h2>
+
+							<div ng-show="news.body"><p ng-bind-html="news.body"></p></div>
+
+							<div ng-show="news.author || news.date">
+								<div class="line line-lg b-b b-light"></div>
+								<div class="text-muted">
+									<span ng-show="news.author"><i class="fa fa-user text-muted"></i> by <a href
+																											class="m-r-sm">{{news.firstName + ' ' + news.lastName}}</a></span>
+									<span ng-show="news.date"><i
+											class="fa fa-clock-o text-muted"></i>{{humanReadableDate(news,format)}}</span>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+
+			</div>
+
+			<div class="modal-footer">
+				<div ng-show="edit">
+					<div class="col-lg-6 col-sm-6 col-xs-6 col-md-6" style="text-align: center;">
+						<button class="btn btn-lg btn-success" ng-click="publishNews(news)" ng-disabled='form.$invalid'>
+							Publish
+						</button>
+					</div>
+					<div class="col-lg-6 col-sm-6 col-xs-6 col-md-6" style="text-align: center;">
+						<button class="btn btn-lg btn-primary" ng-click="toggleEdit()">Preview</button>
+					</div>
+				</div>
+				<div ng-hide="edit">
+					<div class="col-lg-6 col-sm-6 col-xs-6 col-md-6" style="text-align: center;">
+						<button class="btn btn-lg btn-success" ng-click="notifyNews(news)" ng-disabled='form.$invalid'>
+							Notify
+						</button>
+					</div>
+					<div class="col-lg-6 col-sm-6 col-xs-6 col-md-6" style="text-align: center;">
+						<button class="btn btn-lg btn-primary" ng-click="toggleEdit()">Back to edit</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
