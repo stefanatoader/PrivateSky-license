@@ -1,0 +1,98 @@
+<div ng-controller="userManagerController">
+
+	<div class="ng-scope" ui-view="">
+		<!--Page titlte-->
+		<div class="bg-light lter b-b wrapper-md ng-scope pageTitle">
+			<h1 class="m-n font-thin h3">Manage Clocking</h1>
+		</div>
+
+		<!--Preloading/ Not loading message placeholder-->
+		<div ng-show="fetching">
+			<div class="wrapper-md ng-scope">
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						Fetching...
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="wrapper-md ng-scope" ng-hide="fetching">
+
+			<!--A small title for users section-->
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					Create, Update or Delete Clocking Entries
+				</div>
+
+				<!--Search section | -->
+				<div class="panel-body b-b b-light">
+					<div class="col-lg-6">
+						<div class="input-group">
+							<input id="filter" type="text" class="form-control" ng-model="searchFilter.username"
+								   placeholder="Search for...">
+							<span class="input-group-btn">
+                                <button class="btn btn-primary" ng-click="startFilter()" type="button">Search</button>
+                              </span>
+						</div>
+					</div>
+				</div>
+
+				<!--Create new user button-->
+				<div class="panel-body b-b b-light">
+					<div class="col-lg-6" style="float: right">
+						<button style="float: right" class="btn btn-default btn-primary" ng-click="createUser()"
+								type="button">Create new entry
+						</button>
+					</div>
+				</div>
+
+				<div>
+					<!--USERS TABLE | Generated with footable JS Lib-->
+					<div class="container">         
+					<table class="table table-striped">
+						<thead>
+							<tr>
+								<th>Member</th>
+								<th>Hours/month</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td>Lenuta Alboaie</td>
+								<td>60</td>
+							</tr>
+							<tr>
+								<td>Andrei Panu</td>
+								<td>85</td>
+							</tr>
+							<tr>
+								<td>Cosmin Ursache</td>
+								<td>168</td>
+							</tr>
+							<td>
+								<input type="button" class="btn btn-info btn-xs" ng-click="editUser(user)" value="Edit">
+							</td>
+
+						</tr>
+						</tbody>
+
+						<tfoot>
+						<tr class="footable-row-detail">
+							<td colspan="5">
+								<div class="text-center hide-if-no-paging">
+									<ul class="pagination"></ul>
+								</div>
+							</td>
+						</tr>
+						</tfoot>
+
+					</table>
+				</div>
+
+
+			</div>
+		</div>
+	</div>
+</div>
+
