@@ -1,0 +1,98 @@
+<div ng-controller="accessManagerController">
+
+    <div class="ng-scope" ui-view="">
+        <div class="bg-light lter b-b wrapper-md ng-scope pageTitle">
+            <h1 class="m-n font-thin h3">Access List Manager</h1>
+        </div>
+
+        <div ng-show="fetching">
+            <div class="wrapper-md ng-scope">
+                <div class="panel panel-default">
+                    <div class="panel-heading">Fetching...</div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="wrapper-md ng-scope" ng-hide="fetching">
+
+            <div class="panel panel-default">
+                <div class="panel-heading">Search, Create, Update or Remove Access Rules</div>
+
+                <div class="panel-body b-b b-light">
+                    <div class="col-lg-6">
+                        <div class="input-group">
+                            <input id="filter" type="text" class="form-control" ng-model="searchFilter.title" placeholder="Search for...">
+                            <span class="input-group-btn">
+                                <button class="btn btn-primary" ng-click="startFilter()" type="button">Search</button>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="panel-body b-b b-light">
+                    <div class="col-lg-6 pull-right">
+                        <div class="btn-group dropdown pull-right" dropdown>
+                            <button class="btn btn-primary" dropdown-toggle>Add new ... <span class="caret"></span></button>
+                            <ul class="dropdown-menu">
+                                <li><a ng-click="addException()">Add new exception</a></li>
+                                <li><a ng-click="addSwarmException()">Add new swarm exception</a></li>
+                                <li class="divider"></li>
+                                <li><a ng-click="createRule()">Create new rule</a></li>
+                                <li><a ng-click="createSwarmRule()">Create new swarm rule</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div ng-show="rules.length">
+
+                    <table class="table footable m-b-none default table-striped" id="rulesTable" data-filter="#filter" data-filtering="true" data-paging="true" data-sorting="true" data-page-size="5" data-limit-navigation="3">
+
+                        <thead>
+                            <tr>
+                                <th data-sort-initial="true">Rule Type</th>
+                                <th data-hide="phone,tablet">Destinated zone</th>
+                                <th>Context type</th>
+                                <th>Context</th>
+                                <th data-hide="phone,tablet">Subcontext type</th>
+                                <th data-hide="phone,tablet">Subcontext</th>
+                                <th data-hide="phone,tablet">Action</th>
+                                <th data-sort-ignore="true">Update</th>
+                                <th data-sort-ignore="true">Remove</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            <tr ng-repeat="rule in rules track by $index" class="footable-even" redraw-table style="display: table-row;">
+                                <td class="footable-visible footable-first-column" ng-switch="rule.type">
+                                    <span class='label label-success' ng-switch-when="white_list">White Listed</span>
+                                    <span class='label label-danger' ng-switch-when="black_list">Black Listed</span>
+                                </td>
+                                <td>{{rule.zone | userMappingZones}}</td>
+                                <td>{{rule.contextType}}</td>
+                                <td>{{rule.context}}</td>
+                                <td>{{rule.subcontextType}}</td>
+                                <td>{{rule.subcontext}}</td>
+                                <td>{{rule.action}}</td>
+                                <td><input type="button" class="btn btn-primary btn-xs" ng-click="editRule(rule)" value="Update"></td>
+                                <td><input type="button" class="btn btn-danger btn-xs" ng-click="removeRule(rule)" value="Remove"></td>
+                            </tr>
+                        </tbody>
+
+                        <tfoot>
+                            <tr class="footable-row-detail">
+                                <td colspan="5">
+                                    <div class="text-center hide-if-no-paging">
+                                        <ul class="pagination"></ul>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tfoot>
+                    </table>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

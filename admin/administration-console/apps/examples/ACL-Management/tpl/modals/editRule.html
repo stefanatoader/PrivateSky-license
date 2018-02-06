@@ -1,0 +1,53 @@
+<!--<script src="../../js/controllers/accessManagerController.js"></script>-->
+<div class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" ng-click="close(false)" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">{{welcomeMessage}}</h4>
+            </div>
+            <div class="modal-body">
+
+                <form name="form" class="form-validation">
+
+                    <div ng-repeat="prop in props">
+                        <div class="clearfix"></div>
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label">{{prop.nice}}</label>
+                            <div ng-class="{'has-error': form[prop.name].$dirty && form[prop.name].$invalid}" class="col-sm-8">
+                                <input id="{{prop.name}}" name="{{prop.name}}" ng-model="rule[prop.name]"
+                                       type="{{prop.type}}" class="form-control"
+                                       placeholder="{{prop.placeholder}}" >
+                                <span class="help-block" ng-show="form[prop.name].$dirty && form[prop.name].$invalid">
+									<span ng-repeat="err in prop.error" ng-show="form[prop.name].$dirty && form[prop.name].$invalid">
+										<span ng-show="form[prop.name].$error[err.type]">{{err.message}}</span>
+									</span>
+								</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="clearfix"></div>
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label" for="zone">User Zone:</label>
+                            <div ng-class="{'has-error': form.zone.$dirty && form.zone.$invalid}" class="col-sm-8">
+                                <select id='zone' name="zone" ng-model="rule.zone" class="btn btn-primary" required>
+                                    <option ng-repeat="zone in zones" value="{{zone}}">{{zone }}</option>
+                                </select>
+                                <span class="help-block" ng-show="form.zone.$dirty && form.zone.$invalid">
+										<span ng-show="form.zone.$error.required">User zone is required.</span>
+								</span>
+                            </div>
+                        </div>
+                    </div>
+
+                </form>
+            </div>
+
+
+            <div class="modal-footer" style="margin-top: 15px;">
+                <button class="btn btn-lg btn-primary btn-block" ng-click="updateRule()" ng-disabled='form.$invalid'>{{createMessage}}</button>
+            </div>
+        </div>
+    </div>
+</div>
