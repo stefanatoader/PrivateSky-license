@@ -2,12 +2,14 @@
 
     <!--Page titlte-->
     <div class="bg-light lter b-b wrapper-md ng-scope pageTitle">
-        <h1 class="m-n font-thin h3">Answers Management</h1>
+        <h1 class="m-n font-thin h3">Activities Management</h1>
     </div>
+
 
     <div class="container-fluid">
         <div class="panel panel-default" style="margin-top: 15px;" ng-show="fetching">
-            <div class="panel-heading font-bold">Retrieve entitie's answers for an user</div>
+
+            <div class="panel-heading font-bold">Retrieve form's answers for an user</div>
             <div class="panel-body">
                 <form class="form-inline" role="search">
                     <div class="row">
@@ -27,7 +29,7 @@
 
     <div class="container-fluid">
         <div class="panel panel-default" style="margin-top: 15px;" ng-show="fetching">
-            <div class="panel-heading font-bold">Retrieve answers for a given entity</div>
+            <div class="panel-heading font-bold">Retrieve answers for a given form</div>
             <div class="panel-body">
                 <form class="form-inline" role="search">
                     <div class="row">
@@ -50,7 +52,7 @@
     <div class="wrapper-md ng-scope" ng-hide="fetching">
         <!--A small title for forms section-->
         <div class="panel panel-default" ng-hide="displayAnswers">
-            <div class="alert alert-info noFormsAlert" style="margin: 15px; font-weight: 500; text-align: center" ng-show="forms.length==0">There are no entities available yet.</div>
+            <div class="alert alert-info noFormsAlert" style="margin: 15px; font-weight: 500; text-align: center" ng-show="forms.length==0">There are no forms available yet.</div>
 
             <div ng-show="forms.length>0">
                 <table class="table footable m-b-none default table-striped" data-filter="#filter" data-filtering="true" data-paging="true" data-sorting="true" data-page-size="5" data-limit-navigation="3" id="formsTable">
@@ -101,7 +103,7 @@
             <div class="alert alert-info noFormsAlert" style="margin: 15px; font-weight: 500; text-align: center" ng-show="answers.length==0">There are no answers available yet.</div>
 
                 <div ng-show="answers.length>0">
-                    {{answers}}
+                    <!--{{answers}}-->
                     <table class="table footable m-b-none default table-striped" data-filter="#filter" data-filtering="true" data-paging="true" data-sorting="true" data-page-size="5" data-limit-navigation="3" id="answersTable">
 
                         <thead>
@@ -110,6 +112,7 @@
                             <th data-hide="phone,tablet" data-sort-ignore="true">Email</th>
                             <th data-hide="phone,tablet">Zone</th>
                             <th data-sort-ignore="true">Actions</th>
+                            <th>Answer</th>
                         </tr>
                         </thead>
 
@@ -121,6 +124,7 @@
                             <td>
                                 <input type="button" class="btn btn-info btn-xs" ng-click="modalForm(answer)" value="Review">
                             </td>
+                            <td>{{answer.answer}}</td>
                         </tr>
                         </tbody>
 

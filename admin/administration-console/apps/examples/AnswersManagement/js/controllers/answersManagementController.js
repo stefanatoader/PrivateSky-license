@@ -16,7 +16,7 @@ app.controller('answersManagementController', ['$scope','swarmHubService', "noti
         $scope.displayAnswers; // a bool that will control what table will be displayed;
 	    $scope.humanReadableDate = humanReadableDate;
 
-        $scope.retrieveAnswers = function(){
+        /*$scope.retrieveAnswers = function(){
 
         	if($scope.userEmail){
 		        hub.startSwarm("forms.js","retrieveForms",{"email":$scope.userEmail});
@@ -27,7 +27,9 @@ app.controller('answersManagementController', ['$scope','swarmHubService', "noti
         		$scope.displayAnswers = true;
 	        }
 	        console.log($scope.displayAnswers);
-        };
+        };*/
+
+        hub.startSwarm("forms.js", "retrieveAnswerActivity", {});
 
 	    hub.on("forms.js", "failed", failed);
 	    hub.on("forms.js","gotForms", gotForms);

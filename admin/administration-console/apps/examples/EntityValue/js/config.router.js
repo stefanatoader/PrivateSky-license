@@ -26,7 +26,7 @@ angular.module('app')
 
                     .state('app.formsRenderer',{
                        url:'/formsRenderer',
-                        templateUrl:'tpl/entityRenderer.html',
+                        templateUrl:'tpl/formsRenderer.html',
                         resolve:{
                             deps:['$ocLazyLoad',
                                 function ($ocLazyLoad) {

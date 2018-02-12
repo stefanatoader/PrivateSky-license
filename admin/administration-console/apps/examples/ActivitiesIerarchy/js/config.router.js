@@ -16,7 +16,7 @@ angular.module('app')
 
                 $urlRouterProvider
                     //regula de redirectionare in cazul in care utilizatorul incearca sa incarce o pagina inexistenta
-                    .otherwise('/app/userManager');
+                    .otherwise('/app/ierarchy');
 
                 $stateProvider
                     //regula default a aplicatiei ce are rol wrapper pentru celelalte template-uri
@@ -29,7 +29,7 @@ angular.module('app')
                     .state('app.usermanager',{
                        // regula principala ce contine intreaga aplicatie.
                        url:'/userManager',
-                        templateUrl:'tpl/usersPage.html',
+                        templateUrl:'tpl/ierarchy.html',
                         resolve:{
                             deps:['$ocLazyLoad',
                                 function ($ocLazyLoad) {

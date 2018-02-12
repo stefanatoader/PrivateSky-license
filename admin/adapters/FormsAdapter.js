@@ -160,3 +160,7 @@ retrieveForms = function(filter, callback){
 retrieveAnswers = function(filter,callback){
     persistence.filter('Answer',filter,callback)
 };
+
+retrieveAnswersActivities = function(title, callback) {
+    connection.query("select answer from Answer join Form on Form.formId = Answer.formId where Form.title='"+title+"'", callback);
+}

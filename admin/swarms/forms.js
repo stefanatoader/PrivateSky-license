@@ -175,6 +175,28 @@ var formsSwarming = {
 	    console.log("[forms.js][retrieveAnswers] Getting answers with filter ",this.filter);
     },
 
+    retrieveAnswerActivity:function (title) {
+        this.title = title;
+        this.swarm("retrieveAnswersActivity");
+    },
+
+    retrieveAnswersActivity:{
+        node: "FormsAdapter",
+        code: function () {
+            var self = this;
+            console.log("[forms.js][retrueveAnswersActivity]) Getting answers with" + this.title+").");
+            retrieveAnswersActivities(this.title, S(function(err,answers){
+                if(err){
+                    self.err = err.message;
+                    self.home('failed');
+                }else{
+                    self.answers = answers;
+                    self.home("gotAnswersForActivity");
+                }
+            }))
+        }
+    },
+
     retrieveAnswersForm:function (title) {
         this.title = title;
         this.swarm("retrieveAnswerswUser");
